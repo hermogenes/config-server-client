@@ -23,8 +23,7 @@
     "axios": "^0.18.0",
     "deasync": "^0.1.14",
     "lodash": "^4.17.11",
-    "proxyquire": "^2.1.0",
-    "webpack": "^4.26.0"
+    "proxyquire": "^2.1.0"
   },
   "devDependencies": {
     "@commitlint/cli": "latest",
