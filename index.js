@@ -29,7 +29,8 @@ const load = async config => {
   stringify: false, ...config || {}};
   const url = `${config.server.url}${config.application.name}/${config.env}`;
   const response = await axios(url);
-  const items = response.data.propertySources[0].source;
+  const exists = response.data.propertySources.length > 0;
+  const items = exists ? response.data.propertySources[0].source : {};
   const envObj = {};
   const {stringify} = config;
   _.keys(items).forEach(key => {

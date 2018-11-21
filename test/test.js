@@ -1,5 +1,6 @@
 const test = require('ava');
 const proxyquire = require('proxyquire');
+const _ = require('lodash');
 
 const {beforeEach, afterEach} = require('./helpers');
 
@@ -48,6 +49,18 @@ test('sync > success', t => {
   });
   const itens = client.loadSync();
   t.is(itens.CONFIG_SERVER_URL, 'http://teste/teste/production');
+});
+
+test('async > no results', async t => {
+  process.env.CONFIG_SERVER_URL = 'http://teste/';
+  process.env.CONFIG_SERVER_APP = 'teste';
+  process.env.CONFIG_SERVER_ENV = 'production';
+
+  const client = proxyquire('..', {
+    axios: () => Promise.resolve({data: {propertySources: []}})
+  });
+  const itens = await client.load();
+  t.is(_.keys(itens).length, 0);
 });
 
 test('async > axios uses env vars', async t => {
