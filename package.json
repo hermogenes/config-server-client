@@ -1,7 +1,7 @@
 {
   "name": "config-server-client",
   "description": "An npm package to get configurations from a Spring Cloud Config Server",
-  "version": "1.0.2",
+  "version": "1.0.3",
   "author": "Hermógenes Ferreira <hermogenes_17@hotmail.com> ()",
   "ava": {
     "failFast": true,
