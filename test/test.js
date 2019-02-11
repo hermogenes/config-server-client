@@ -94,6 +94,7 @@ test('async > stringify contents', async t => {
 test('async > array no stringify', async t => {
   process.env.CONFIG_SERVER_URL = 'http://teste/';
   process.env.CONFIG_SERVER_APP = 'teste';
+  process.env.CONFIG_SERVER_ENV = 'test';
 
   const client = proxyquire('..', {
     axios: url => Promise.resolve(createFakeResponse({
@@ -102,4 +103,21 @@ test('async > array no stringify', async t => {
   });
   const itens = await client.load();
   t.is(itens.CONFIG_SERVER_URL[0], 'http://teste/teste/test');
+});
+
+test('async > axios uses auth header', async t => {
+  process.env.CONFIG_SERVER_URL = 'http://teste/';
+  process.env.CONFIG_SERVER_APP = 'teste';
+  process.env.CONFIG_SERVER_ENV = 'production';
+  process.env.CONFIG_SERVER_AUTH = 'Basic dGVzdGU6dGVzdGU=';
+
+  const client = proxyquire('..', {
+    axios: (url, opts) => Promise.resolve(createFakeResponse({
+      'Config.Server.Url': url,
+      'Config.Server.Auth': opts.headers.Authorization
+    }))
+  });
+  const itens = await client.load();
+  t.is(itens.CONFIG_SERVER_URL, 'http://teste/teste/production');
+  t.is(itens.CONFIG_SERVER_AUTH, 'Basic dGVzdGU6dGVzdGU=');
 });

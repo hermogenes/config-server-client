@@ -11,15 +11,19 @@ const handleArrValue = (newName, envObj, value, stringify) => {
     if (stringify) {
       actualArr = JSON.parse(actualArr);
     }
+
     actualArr.push(value);
+
     return {newName, value: actualArr};
   }
+
   return {newName, value};
 };
 
 const load = async config => {
   config = {server: {
-    url: process.env.CONFIG_SERVER_URL
+    url: process.env.CONFIG_SERVER_URL,
+    auth: process.env.CONFIG_SERVER_AUTH
   },
   env: process.env.CONFIG_SERVER_ENV || process.env.NODE_ENV,
   application: {
@@ -28,7 +32,11 @@ const load = async config => {
   prefix: '',
   stringify: false, ...config || {}};
   const url = `${config.server.url}${config.application.name}/${config.env}`;
-  const response = await axios(url);
+  const response = await axios(url, {
+    headers: {
+      Authorization: config.server.auth
+    }
+  });
   const exists = response.data.propertySources.length > 0;
   const items = exists ? response.data.propertySources[0].source : {};
   const envObj = {};
@@ -48,7 +56,9 @@ const fnLoadAsync = async (config, cb) => {
       cb = config;
       config = {};
     }
+
     const res = await load(config);
+
     cb(null, res);
   } catch (err) {
     cb(err);

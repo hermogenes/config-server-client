@@ -40,13 +40,14 @@ console.log(configServerClient.loadSync());
 
 ## Options
 
-| Item              | Description                                                       | Default                                               |
-| ----------------- | ----------------------------------------------------------------- | ----------------------------------------------------- |
-| config.server.url | The endpoint of the Spring Cloud Config Server                    | process.env.CONFIG_SERVER_URL                         |
-| env               | Environment (e.g development, test, production)                   | process.env.CONFIG_SERVER_ENV or process.env.NODE_ENV |
-| application.name  | Application name (e.g myAwesomeApp)                               | process.env.CONFIG_SERVER_APP                         |
-| prefix            | One prefix to use in resulted env name (eg process.env.VUE_APP_   | (none)                                                |
-| stringify         | Indicate if needs to JSON.stringify contents (usually to webpack) | false                                                 |
+| Item               | Description                                                       | Default                                               |
+| ------------------ | ----------------------------------------------------------------- | ----------------------------------------------------- |
+| config.server.url  | The endpoint of the Spring Cloud Config Server                    | process.env.CONFIG_SERVER_URL                         |
+| config.server.auth | An optional Authorization Header to send (e.g Basic xpto=)        | process.env.CONFIG_SERVER_AUTH                        |
+| env                | Environment (e.g development, test, production)                   | process.env.CONFIG_SERVER_ENV or process.env.NODE_ENV |
+| application.name   | Application name (e.g myAwesomeApp)                               | process.env.CONFIG_SERVER_APP                         |
+| prefix             | One prefix to use in resulted env name (eg process.env.VUE_APP_   | (none)                                                |
+| stringify          | Indicate if needs to JSON.stringify contents (usually to webpack) | false                                                 |
 
 
 ## Contributors
@@ -54,12 +55,6 @@ console.log(configServerClient.loadSync());
 | Name                    |
 | ----------------------- |
 | **Hermógenes Ferreira** |
-
-| Name |
-
-\| ----------------------- \|
-
-\| **Hermógenes Ferreira** \|
 
 
 ## License
